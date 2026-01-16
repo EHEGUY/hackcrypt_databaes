@@ -1,0 +1,35 @@
+# Core ML/CV
+torch>=2.0.0
+torchvision>=0.15.0
+transformers>=4.30.0
+opencv-python>=4.8.0
+numpy>=1.24.0
+pillow>=10.0.0
+
+# Face Detection & Analysis
+dlib>=19.24.0  # For better facial landmarks
+face-recognition>=1.3.0  # Built on dlib
+
+# Audio Processing for Lip-Sync
+librosa>=0.10.0  # Audio analysis
+pydub>=0.25.0   # Audio manipulation
+soundfile>=0.12.0  # Audio I/O
+
+# Image Quality & Texture Analysis
+scikit-image>=0.21.0  # Texture features (LBP, GLCM)
+scipy>=1.11.0  # Signal processing
+
+# Frequency Domain Analysis
+PyWavelets>=1.4.0  # Wavelet transforms
+
+# API Framework
+fastapi>=0.104.0
+uvicorn>=0.24.0
+python-multipart>=0.0.6
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+
+# Optional but useful
+tqdm>=4.66.0  # Progress bars
+matplotlib>=3.7.0  # Visualization (for debugging)
+
