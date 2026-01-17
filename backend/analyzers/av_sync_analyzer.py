@@ -66,7 +66,7 @@ class AVSyncAnalyzer(BaseAnalyzer):
                 self.detector = dlib.get_frontal_face_detector()
                 self.predictor = dlib.shape_predictor(model_path)
                 self.model_loaded = True
-                self.logger.info("✓ AVSyncAnalyzer initialized with dlib")
+                self.logger.info("AVSyncAnalyzer initialized with dlib")
             except Exception as e:
                 self.logger.warning(
                     f"Failed to load dlib model: {e}\n"
@@ -180,13 +180,34 @@ class AVSyncAnalyzer(BaseAnalyzer):
     # ---------------------------------------------------------
 
     def _extract_audio_envelope(self, video_path: str) -> Optional[np.ndarray]:
+        """Extract audio envelope with better error handling"""
         try:
-            audio, _ = librosa.load(video_path, sr=None, mono=True)
+            # Try multiple backend options for librosa
+            import warnings
+            warnings.filterwarnings('ignore', category=FutureWarning)
+            warnings.filterwarnings('ignore', category=UserWarning)
+            
+            # First attempt: use ffmpeg backend directly
+            try:
+                audio, sr = librosa.load(video_path, sr=22050, mono=True, res_type='kaiser_fast')
+            except Exception as e1:
+                self.logger.warning(f"First audio load attempt failed: {e1}")
+                # Second attempt: try with default settings
+                try:
+                    audio, sr = librosa.load(video_path, sr=None, mono=True)
+                except Exception as e2:
+                    self.logger.error(f"Audio extraction failed completely: {e2}")
+                    return None
+            
             if len(audio) == 0:
+                self.logger.warning("Audio loaded but is empty")
                 return None
 
-            stft = librosa.stft(audio)
-            return np.abs(stft).mean(axis=0)
+            # Compute STFT and get magnitude envelope
+            stft = librosa.stft(audio, n_fft=2048, hop_length=512)
+            envelope = np.abs(stft).mean(axis=0)
+            
+            return envelope
 
         except Exception as e:
             self.logger.error(f"Audio extraction failed: {e}")
@@ -219,8 +240,13 @@ class AVSyncAnalyzer(BaseAnalyzer):
 
         # Normalize to remove scale dependency
         if len(motions) > 1:
-            motions = list((np.array(motions) - np.mean(motions)) /
-                           (np.std(motions) + 1e-6))
+            motions_array = np.array(motions)
+            mean = np.mean(motions_array)
+            std = np.std(motions_array)
+            if std > 1e-6:
+                motions = list((motions_array - mean) / std)
+            else:
+                motions = list(motions_array - mean)
 
         return motions
 
@@ -250,7 +276,7 @@ class AVSyncAnalyzer(BaseAnalyzer):
     def get_info(self) -> Dict[str, Any]:
         return {
             "name": "AVSyncAnalyzer",
-            "version": "2.2.0",
+            "version": "2.3.0",
             "method": "normalized inner-lip motion vs audio envelope correlation",
             "model_loaded": self.model_loaded,
             "dependencies": ["dlib", "librosa", "scipy"],

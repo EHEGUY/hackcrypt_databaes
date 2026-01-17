@@ -42,7 +42,7 @@ class Settings(BaseSettings):
     # Xception model
     XCEPTION_MODEL_PATH: str = os.getenv(
         "XCEPTION_MODEL_PATH", 
-        "./model/xception5o-tensorflow2-default-v1.tar.gz"
+        "./model/xception_deepfake_image_5o.h5"
     )
     
     # Model ensemble
