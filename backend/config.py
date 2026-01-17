@@ -42,7 +42,7 @@ class Settings(BaseSettings):
     # Xception model
     XCEPTION_MODEL_PATH: str = os.getenv(
         "XCEPTION_MODEL_PATH", 
-        "/Users/emaad/Developer/emaad/hyckcrypt/model/xception5o-tensorflow2-default-v1.tar.gz"
+        "./model/xception5o-tensorflow2-default-v1.tar.gz"
     )
     
     # Model ensemble
