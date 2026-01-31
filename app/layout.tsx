@@ -5,8 +5,8 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
-  title: 'HackCrypt - Advanced Deepfake Detection',
-  description: 'Premium deepfake detection and video analysis platform',
+  title: 'truverify - AI Deepfake Detection',
+  description: 'Advanced deepfake detection and video authentication powered by AI',
   viewport: {
     width: 'device-width',
     initialScale: 1,
