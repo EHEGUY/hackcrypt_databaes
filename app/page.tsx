@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import Navigation from '@/components/navigation';
 import Hero from '@/components/hero';
 import UploadSection from '@/components/upload-section';
-import Features from '@/components/features';
 import Footer from '@/components/footer';
 
 export default function Home() {
@@ -24,7 +23,6 @@ export default function Home() {
       <Navigation scrolled={scrolled} />
       <Hero />
       <UploadSection />
-      <Features />
       <Footer />
     </main>
   );

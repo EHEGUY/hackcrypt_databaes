@@ -18,25 +18,25 @@ export default function Hero() {
 
         {/* Main Heading */}
         <h1 className="text-5xl md:text-7xl font-bold text-balance leading-tight">
-          Detect Deepfakes with
-          <span className="bg-gradient-to-r from-accent via-blue-400 to-cyan-400 bg-clip-text text-transparent">
+          Verify Authenticity with
+          <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-300 bg-clip-text text-transparent">
             {' '}
-            Precision
+            AI Technology
           </span>
         </h1>
 
         {/* Subheading */}
         <p className="text-lg md:text-xl text-foreground/60 text-balance max-w-2xl mx-auto leading-relaxed">
-          Powered by advanced machine learning models, HackCrypt identifies manipulated media with unprecedented accuracy. Trust the detection that leads the industry.
+          Advanced deepfake detection powered by state-of-the-art AI models. Verify video authenticity in seconds with industry-leading accuracy.
         </p>
 
         {/* CTA Button */}
         <div className="pt-4">
           <button
             onClick={scrollToUpload}
-            className="px-8 py-4 bg-primary text-primary-foreground rounded-full font-semibold hover:shadow-lg hover:shadow-accent/20 transition-smooth hover:scale-105 inline-flex items-center gap-2"
+            className="px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-full font-semibold hover:shadow-2xl hover:shadow-blue-500/40 transition-all hover:scale-105 inline-flex items-center gap-2"
           >
-            Start Analyzing
+            Start Verifying
             <ChevronDown className="w-5 h-5" />
           </button>
         </div>

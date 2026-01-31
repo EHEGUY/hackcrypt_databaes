@@ -38,15 +38,21 @@ export default function UploadSection() {
     formData.append('file', file);
 
     try {
-      const response = await fetch('http://localhost:8000/api/v1/analyze-video', {
+      const response = await fetch('/api/v1/analyze-video', {
         method: 'POST',
         body: formData,
       });
 
-      const data = await response.json();
-      setResult(data);
+      if (!response.ok) {
+        const errorData = await response.json();
+        setResult({ error: errorData.error || 'Analysis failed. Please try again.' });
+      } else {
+        const data = await response.json();
+        setResult(data);
+      }
     } catch (error) {
-      setResult({ error: 'Failed to connect to analysis server. Make sure backend is running.' });
+      console.log('[v0] Error during analysis:', error);
+      setResult({ error: 'Failed to analyze video. Please ensure the backend is running and accessible.' });
     } finally {
       setIsLoading(false);
     }
@@ -94,15 +100,15 @@ export default function UploadSection() {
             />
 
             <div className="flex flex-col items-center justify-center gap-4">
-              <div className={`p-4 rounded-full transition-smooth ${isDragging ? 'bg-accent/20' : 'bg-secondary'}`}>
-                <Upload className={`w-8 h-8 ${isDragging ? 'text-accent' : 'text-foreground/60'}`} />
+              <div className={`p-4 rounded-full transition-all ${isDragging ? 'bg-blue-500/20 scale-110' : 'bg-gradient-to-br from-blue-500/10 to-cyan-500/10'}`}>
+                <Upload className={`w-8 h-8 transition-colors ${isDragging ? 'text-blue-400' : 'text-blue-300'}`} />
               </div>
               <div className="text-center">
-                <p className="text-lg font-semibold text-foreground">
-                  {isLoading ? 'Analyzing...' : 'Drop your video here'}
+                <p className="text-xl font-semibold text-foreground">
+                  {isLoading ? 'Analyzing your video...' : 'Drop your video here'}
                 </p>
                 <p className="text-sm text-foreground/50 mt-2">
-                  or click to browse. Supports MP4, WebM, and MOV formats
+                  or click to browse • Supports MP4, WebM, and MOV
                 </p>
               </div>
             </div>
@@ -169,7 +175,7 @@ export default function UploadSection() {
                   setResult(null);
                   setFileName('');
                 }}
-                className="w-full py-3 px-4 bg-secondary text-foreground rounded-xl hover:bg-secondary/80 transition-smooth font-medium"
+                className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-xl hover:shadow-lg hover:shadow-blue-500/50 hover:scale-105 transition-all font-semibold"
               >
                 Analyze Another Video
               </button>

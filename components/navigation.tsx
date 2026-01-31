@@ -22,10 +22,10 @@ export default function Navigation({ scrolled }: NavigationProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 md:h-20">
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <Shield className="w-5 h-5 text-primary-foreground" />
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
+              <Shield className="w-5 h-5 text-white font-bold" />
             </div>
-            <span className="text-xl font-semibold hidden sm:inline">HackCrypt</span>
+            <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent hidden sm:inline">truverify</span>
           </Link>
 
           {/* Desktop Menu */}
